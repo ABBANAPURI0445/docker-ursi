@@ -1,5 +1,8 @@
 FROM tomcat:8
-RUN wget --user=admin --password='admin123'  http://52.10.220.219:8082/artifactory/GOL/gameoflife.war
-RUN cp gameoflife.war /usr/local/tomcat/webapps
+ARG user
+ARG password
+ARG url
+RUN wget --user=$user --password='$password'  $url
+RUN mv *.war gol.war && cp gol.war /usr/local/tomcat/webapps
 EXPOSE 8080
 CMD [ "catalina.sh","run"]
